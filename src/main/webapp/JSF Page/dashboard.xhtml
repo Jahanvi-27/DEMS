@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html xmlns:h="jakarta.faces.html">
+
+<h:head>
+
+    <title>DEMS Dashboard</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            background:#F8FAFC;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar{
+
+            width:260px;
+            height:100vh;
+
+            position:fixed;
+
+            top:0;
+            left:0;
+
+            background:#0F172A;
+
+            padding-top:20px;
+        }
+
+        .logo{
+
+            text-align:center;
+
+            color:white;
+
+            font-size:28px;
+
+            font-weight:bold;
+
+            margin-bottom:40px;
+        }
+
+        .sidebar a{
+
+            display:block;
+
+            color:white;
+
+            text-decoration:none;
+
+            padding:15px 25px;
+
+            transition:.3s;
+        }
+
+        .sidebar a:hover{
+
+            background:#06B6D4;
+        }
+
+        /* CONTENT */
+
+        .content{
+
+            margin-left:260px;
+
+            padding:30px;
+        }
+
+        /* TOPBAR */
+
+        .topbar{
+
+            background:white;
+
+            padding:20px;
+
+            border-radius:15px;
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            box-shadow:
+            0 4px 10px rgba(0,0,0,.08);
+        }
+
+        .welcome{
+
+            color:#0F172A;
+        }
+
+        .logout-btn{
+
+            background:#DC2626;
+
+            color:white;
+
+            border:none;
+
+            padding:10px 20px;
+
+            border-radius:8px;
+
+            cursor:pointer;
+        }
+
+        /* CARDS */
+
+        .card-container{
+
+            margin-top:30px;
+
+            display:grid;
+
+            grid-template-columns:
+            repeat(auto-fit,minmax(250px,1fr));
+
+            gap:20px;
+        }
+
+        .card{
+
+            background:white;
+
+            border-radius:15px;
+
+            padding:25px;
+
+            box-shadow:
+            0 5px 15px rgba(0,0,0,.08);
+
+            transition:.3s;
+        }
+
+        .card:hover{
+
+            transform:translateY(-5px);
+        }
+
+        .card h3{
+
+            color:#64748B;
+
+            margin-bottom:10px;
+        }
+
+        .card h1{
+
+            color:#0F172A;
+        }
+
+        /* STATUS COLORS */
+
+        .users{
+            border-left:5px solid #06B6D4;
+        }
+
+        .cases{
+            border-left:5px solid #22C55E;
+        }
+
+        .evidence{
+            border-left:5px solid #F59E0B;
+        }
+
+        .open{
+            border-left:5px solid #06B6D4;
+        }
+
+        .closed{
+            border-left:5px solid #DC2626;
+        }
+
+    </style>
+
+</h:head>
+
+<h:body>
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            DEMS
+        </div>
+
+        <a href="dashboard.xhtml">📊 Dashboard</a>
+
+        <a href="users.xhtml">👤 Users</a>
+
+        <a href="cases.xhtml">📁 Cases</a>
+
+        <a href="evidence.xhtml">🗂 Evidence</a>
+
+        <a href="tasks.xhtml">✅ Tasks</a>
+
+        <a href="reports.xhtml">📄 Reports</a>
+
+        <a href="audit.xhtml">🔍 Audit Logs</a>
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+    <div class="content">
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <div class="welcome">
+
+                <h2>
+                    Welcome,
+                    #{loginBean.loggedUser.fullName}
+                </h2>
+
+                <p>
+                    Digital Evidence Management System
+                </p>
+
+            </div>
+
+            <h:form>
+
+                <h:commandButton
+                    value="Logout"
+                    action="#{loginBean.logout()}"
+                    styleClass="logout-btn"/>
+
+            </h:form>
+
+        </div>
+
+        <!-- CARDS -->
+
+        <div class="card-container">
+
+            <div class="card users">
+
+                <h3>Total Users</h3>
+
+                <h1>
+                    #{dashboardBean.totalUsers}
+                </h1>
+
+            </div>
+
+            <div class="card cases">
+
+                <h3>Total Cases</h3>
+
+                <h1>
+                    #{dashboardBean.totalCases}
+                </h1>
+
+            </div>
+
+            <div class="card evidence">
+
+                <h3>Total Evidence</h3>
+
+                <h1>
+                    #{dashboardBean.totalEvidence}
+                </h1>
+
+            </div>
+
+            <div class="card open">
+
+                <h3>Open Cases</h3>
+
+                <h1>
+                    #{dashboardBean.openCases}
+                </h1>
+
+            </div>
+
+            <div class="card closed">
+
+                <h3>Closed Cases</h3>
+
+                <h1>
+                    #{dashboardBean.closedCases}
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</h:body>
+
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html
+xmlns:h="jakarta.faces.html"
+xmlns:f="jakarta.faces.core">
+
+<h:head>
+
+<title>User Management</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#F8FAFC;
+    padding:30px;
+}
+
+.header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+h1{
+    color:#0F172A;
+}
+
+.add-btn{
+
+    background:#06B6D4;
+
+    color:white;
+
+    padding:12px 20px;
+
+    text-decoration:none;
+
+    border-radius:8px;
+
+    font-weight:bold;
+}
+
+.add-btn:hover{
+    opacity:.9;
+}
+
+.table-container{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+
+    background:#0F172A;
+
+    color:white;
+
+    padding:15px;
+}
+
+td{
+
+    padding:12px;
+
+    border-bottom:1px solid #eee;
+}
+
+.edit-btn{
+
+    background:#F59E0B;
+    color:white;
+
+    padding:8px 15px;
+
+    text-decoration:none;
+
+    border-radius:6px;
+}
+
+.delete-btn{
+
+    background:#DC2626;
+    color:white;
+
+    padding:8px 15px;
+
+    text-decoration:none;
+
+    border-radius:6px;
+}
+
+.active{
+
+    color:#22C55E;
+    font-weight:bold;
+}
+
+</style>
+
+</h:head>
+
+<h:body>
+
+<div class="header">
+
+    <h1>User Management</h1>
+
+    <h:link value="+ Add User"
+            outcome="addUser.xhtml"
+            styleClass="add-btn"/>
+
+</div>
+
+<div class="table-container">
+
+<h:dataTable value="#{userBean.users}"
+             var="u"
+             style="width:100%;">
+
+    <h:column>
+
+        <f:facet name="header">
+            User ID
+        </f:facet>
+
+        #{u.userId}
+
+    </h:column>
+
+    <h:column>
+
+        <f:facet name="header">
+            Name
+        </f:facet>
+
+        #{u.fullName}
+
+    </h:column>
+
+    <h:column>
+        
+
+        <f:facet name="header">
+            Email
+        </f:facet>
+
+        #{u.email}
+
+    </h:column>
+
+    <h:column>
+
+        <f:facet name="header">
+            Status
+        </f:facet>
+
+        <span class="active">
+            #{u.status}
+        </span>
+
+    </h:column>
+    
+    <h:column>
+        <h:form>
+<f:facet name="header">
+Actions
+</f:facet>
+
+<h:commandLink
+value="Edit"
+action="#{userBean.editUser(u)}"
+styleClass="edit-btn"/>
+
+
+
+<h:commandLink
+value="Delete"
+action="#{userBean.deleteUser(u)}"
+styleClass="delete-btn"/>
+</h:form>
+</h:column>
+    
+
+</h:dataTable>
+
+</div>
+
+</h:body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html
+xmlns:h="jakarta.faces.html"
+xmlns:f="jakarta.faces.core">
+
+<h:head>
+
+<title>Add User</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#F8FAFC;
+padding:40px;
+}
+
+.form-card{
+
+max-width:700px;
+
+margin:auto;
+
+background:white;
+
+padding:30px;
+
+border-radius:15px;
+
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+h1{
+
+margin-bottom:25px;
+
+color:#0F172A;
+}
+
+label{
+
+font-weight:bold;
+
+color:#0F172A;
+}
+
+.input{
+
+width:100%;
+
+padding:12px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+margin-top:5px;
+
+margin-bottom:15px;
+}
+
+.save-btn{
+
+background:#22C55E;
+
+color:white;
+
+border:none;
+
+padding:12px 20px;
+
+border-radius:8px;
+
+cursor:pointer;
+}
+
+.cancel-btn{
+
+background:#DC2626;
+
+color:white;
+
+padding:12px 20px;
+
+text-decoration:none;
+
+border-radius:8px;
+
+margin-left:10px;
+}
+
+</style>
+
+</h:head>
+
+<h:body>
+
+<div class="form-card">
+
+<h1>Add New User</h1>
+
+<h:form>
+
+<label>Full Name</label>
+
+<h:inputText
+value="#{userBean.user.fullName}"
+styleClass="input"/>
+
+<label>Email</label>
+
+<h:inputText
+value="#{userBean.user.email}"
+styleClass="input"/>
+
+<label>Password</label>
+
+<h:inputSecret
+value="#{userBean.user.passwordHash}"
+styleClass="input"/>
+
+<label>Phone</label>
+
+<h:inputText
+value="#{userBean.user.phone}"
+styleClass="input"/>
+
+<label>Role</label>
+
+<h:selectOneMenu
+    value="#{userBean.selectedRoleId}"
+    styleClass="input">
+
+    <f:selectItem
+        itemLabel="Select Role"
+        itemValue="" />
+
+    <f:selectItems
+        value="#{userBean.roles}"
+        var="r"
+        itemValue="#{r.roleId}"
+        itemLabel="#{r.roleName}" />
+
+</h:selectOneMenu>
+
+<br/><br/>
+
+<h:commandButton
+value="Save User"
+action="#{userBean.saveUser()}"
+styleClass="save-btn"/>
+
+<h:link
+outcome="users.xhtml"
+value="Cancel"
+styleClass="cancel-btn"/>
+
+</h:form>
+
+</div>
+
+</h:body>
+
+</html>

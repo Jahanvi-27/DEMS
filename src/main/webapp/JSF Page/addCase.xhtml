@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html
+    xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core">
+
+<h:head>
+
+<title>Add Case</title>
+
+<style>
+
+body{
+background:#F8FAFC;
+padding:40px;
+font-family:Segoe UI;
+}
+
+.form-card{
+
+max-width:800px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.input{
+
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:1px solid #ddd;
+border-radius:8px;
+
+}
+
+.save-btn{
+
+background:#22C55E;
+color:white;
+padding:12px 20px;
+border:none;
+border-radius:8px;
+
+}
+
+</style>
+
+</h:head>
+
+<h:body>
+
+<div class="form-card">
+
+<h1>Create New Case</h1>
+
+<h:form>
+
+<label>Case Number</label>
+
+<h:inputText
+value="#{caseBean.currentCase.caseNumber}"
+styleClass="input"/>
+
+<label>Title</label>
+
+<h:inputText
+value="#{caseBean.currentCase.title}"
+styleClass="input"/>
+
+<label>Description</label>
+
+<h:inputTextarea
+value="#{caseBean.currentCase.description}"
+styleClass="input"/>
+
+<label>Priority</label>
+
+<h:selectOneMenu
+value="#{caseBean.currentCase.priority}"
+styleClass="input">
+
+<f:selectItem itemValue="Low" />
+<f:selectItem itemValue="Medium" />
+<f:selectItem itemValue="High" />
+<f:selectItem itemValue="Critical" />
+
+</h:selectOneMenu>
+
+<br/><br/>
+
+<h:commandButton
+value="Create Case"
+action="#{caseBean.saveCase()}"
+styleClass="save-btn"/>
+
+</h:form>
+
+</div>
+
+</h:body>
+</html>

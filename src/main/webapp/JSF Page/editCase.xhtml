@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html
+xmlns:h="jakarta.faces.html">
+
+<h:head>
+
+<title>Edit Case</title>
+
+<style>
+
+body{
+background:#F8FAFC;
+padding:40px;
+font-family:Segoe UI;
+}
+
+.card{
+max-width:700px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.input{
+width:100%;
+padding:12px;
+margin-top:5px;
+margin-bottom:15px;
+border:1px solid #ddd;
+border-radius:8px;
+}
+
+.btn{
+background:#06B6D4;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:8px;
+cursor:pointer;
+}
+
+</style>
+
+</h:head>
+
+<h:body>
+
+<div class="card">
+
+<h2>Edit Case</h2>
+
+<h:form>
+
+<label>Case Number</label>
+
+<h:inputText
+value="#{caseBean.selectedCase.caseNumber}"
+styleClass="input"/>
+
+<label>Title</label>
+
+<h:inputText
+value="#{caseBean.selectedCase.title}"
+styleClass="input"/>
+
+<label>Description</label>
+
+<h:inputTextarea
+value="#{caseBean.selectedCase.description}"
+styleClass="input"/>
+
+<label>Priority</label>
+
+<h:inputText
+value="#{caseBean.selectedCase.priority}"
+styleClass="input"/>
+
+<label>Status</label>
+
+<h:inputText
+value="#{caseBean.selectedCase.status}"
+styleClass="input"/>
+
+<h:commandButton
+value="Update Case"
+action="#{caseBean.updateCase()}"
+styleClass="btn"/>
+
+</h:form>
+
+</div>
+
+</h:body>
+
+</html>

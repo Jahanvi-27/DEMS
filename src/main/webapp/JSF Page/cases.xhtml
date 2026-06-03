@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html
+xmlns:h="jakarta.faces.html"
+xmlns:f="jakarta.faces.core">
+
+<h:head>
+
+<title>Case Management</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#F8FAFC;
+padding:30px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.title{
+font-size:28px;
+font-weight:bold;
+color:#0F172A;
+}
+
+.add-btn{
+background:#06B6D4;
+color:white;
+padding:12px 18px;
+text-decoration:none;
+border-radius:8px;
+font-weight:600;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#0F172A;
+color:white;
+padding:14px;
+text-align:left;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #ddd;
+}
+
+.status-open{
+background:#22C55E;
+color:white;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+}
+
+.status-close{
+background:#DC2626;
+color:white;
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+}
+
+.action-btn{
+padding:8px 12px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-right:5px;
+}
+
+.edit{
+background:#F59E0B;
+color:white;
+}
+
+.delete{
+background:#DC2626;
+color:white;
+}
+
+</style>
+
+</h:head>
+
+<h:body>
+
+<div class="header">
+
+<div class="title">
+Case Management
+</div>
+
+<h:link outcome="addCase.xhtml"
+value="+ Add Case"
+styleClass="add-btn"/>
+
+</div>
+
+<div class="card">
+
+<h:dataTable
+value="#{caseBean.cases}"
+var="c"
+style="width:100%;">
+
+<h:column>
+<f:facet name="header">ID</f:facet>
+#{c.caseId}
+</h:column>
+
+<h:column>
+<f:facet name="header">Case Number</f:facet>
+#{c.caseNumber}
+</h:column>
+
+<h:column>
+<f:facet name="header">Title</f:facet>
+#{c.title}
+</h:column>
+
+<h:column>
+<f:facet name="header">Priority</f:facet>
+#{c.priority}
+</h:column>
+
+<h:column>
+<f:facet name="header">Status</f:facet>
+#{c.status}
+</h:column>
+
+<h:column>
+<f:facet name="header">Created By</f:facet>
+#{c.createdBy.fullName}
+</h:column>
+
+<h:column>
+<f:facet name="header">Actions</f:facet>
+<h:form>
+
+<h:commandButton
+value="Edit"
+action="#{caseBean.editCase(c)}"
+styleClass="action-btn edit"/>
+
+<h:commandButton
+value="Delete"
+action="#{caseBean.deleteCase(c)}"
+styleClass="action-btn delete"
+onclick="return confirm('Delete this case?');"/>
+
+</h:form>
+
+</h:column>
+
+</h:dataTable>
+
+</div>
+
+</h:body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html
+    xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core">
+
+<h:head>
+
+<title>Evidence Management</title>
+
+<style>
+
+body{
+background:#F8FAFC;
+font-family:'Segoe UI';
+padding:30px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+h1{
+color:#0F172A;
+}
+
+.add-btn{
+background:#06B6D4;
+color:white;
+padding:12px 20px;
+text-decoration:none;
+border-radius:8px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+th{
+background:#0F172A;
+color:white;
+padding:12px;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+</style>
+
+</h:head>
+
+<h:body>
+
+<div class="header">
+
+<h1>Evidence Management</h1>
+
+<h:link
+outcome="addEvidence.xhtml"
+value="+ Upload Evidence"
+styleClass="add-btn"/>
+
+</div>
+
+<h:dataTable
+value="#{evidenceBean.evidenceList}"
+var="e"
+style="width:100%">
+
+<h:column>
+<f:facet name="header">ID</f:facet>
+#{e.evidenceId}
+</h:column>
+
+<h:column>
+<f:facet name="header">Evidence</f:facet>
+#{e.evidenceName}
+</h:column>
+
+<h:column>
+<f:facet name="header">Case</f:facet>
+#{e.caseId.caseNumber}
+</h:column>
+
+<h:column>
+<f:facet name="header">Category</f:facet>
+#{e.categoryId.categoryName}
+</h:column>
+
+<h:column>
+<f:facet name="header">Type</f:facet>
+#{e.fileType}
+</h:column>
+
+<h:column>
+<f:facet name="header">Status</f:facet>
+#{e.status}
+</h:column>
+
+</h:dataTable>
+
+</h:body>
+
+</html>
