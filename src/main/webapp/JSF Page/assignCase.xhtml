@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <title>Case Assignment</title>
+
+    <style>
+        body {
+            font-family: Segoe UI;
+            background: #F8FAFC;
+            padding: 30px;
+        }
+
+        .card {
+            max-width: 1100px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            background: #0F172A;
+            color: white;
+        }
+
+        .btn {
+            background: #22C55E;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .status {
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: #E2E8F0;
+        }
+
+        .none {
+            color: #999;
+            font-style: italic;
+        }
+
+        select {
+            padding: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+<div class="card">
+
+    <h2>📁 Case Assignment Panel</h2>
+
+    <h:form>
+
+        <table>
+
+            <tr>
+                <th>Case ID</th>
+                <th>Case Number</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Assigned To</th>
+                <th>Assign User</th>
+                <th>Action</th>
+            </tr>
+
+            <ui:repeat value="#{caseBean.cases}" var="c">
+
+                <tr>
+
+                    <!-- CASE DATA -->
+                    <td>#{c.caseId}</td>
+                    <td>#{c.caseNumber}</td>
+                    <td>#{c.title}</td>
+
+                    <!-- STATUS -->
+                    <td>
+                        <span class="status">#{c.status}</span>
+                    </td>
+
+                    <!-- ASSIGNED USER (NO DROPDOWN HERE) -->
+                    <td>
+                       <h:outputText value="#{caseBean.assignedUserMap[c.caseId]}"
+                            styleClass="#{caseBean.assignedUserMap[c.caseId] eq 'None' ? 'none' : ''}" />
+                    </td>
+
+                    <!-- SHOW DROPDOWN ONLY IF NOT ASSIGNED -->
+                    <td>
+                        <h:panelGroup rendered="#{caseBean.assignedUserName(c) eq 'None'}">
+
+                            <h:selectOneMenu value="#{caseBean.assignedUserMap[c.caseId]}">
+                                <f:selectItems value="#{caseBean.users}"
+                                               var="u"
+                                               itemValue="#{u.userId}"
+                                               itemLabel="#{u.fullName}" />
+                            </h:selectOneMenu>
+
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{caseBean.assignedUserName(c) ne 'None'}">
+                            <span class="none">Already Assigned</span>
+                        </h:panelGroup>
+                    </td>
+
+                    <!-- BUTTON -->
+                    <td>
+
+                        <h:commandButton value="Assign"
+                                         styleClass="btn"
+                                         rendered="#{caseBean.assignedUserName(c) eq 'None'}"
+                                         action="#{caseBean.assignCase(c.caseId, caseBean.assignedUserMap[c.caseId])}" />
+
+                        <h:outputText value="Locked"
+                                      rendered="#{caseBean.assignedUserName(c) ne 'None'}"
+                                      styleClass="none"/>
+
+                    </td>
+
+                </tr>
+
+            </ui:repeat>
+
+        </table>
+
+    </h:form>
+
+</div>
+
+</h:body>
+</html>

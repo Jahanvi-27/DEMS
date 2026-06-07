@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Audit Dashboard</title>
+
+    <style>
+
+        body{
+            font-family:Segoe UI;
+            background:#F8FAFC;
+            padding:25px;
+        }
+
+        .title{
+            font-size:24px;
+            font-weight:bold;
+            color:#0F172A;
+            margin-bottom:20px;
+        }
+
+        .filter-box{
+            display:flex;
+            gap:10px;
+            margin-bottom:20px;
+        }
+
+        input, select{
+            padding:10px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            outline:none;
+        }
+
+        .btn{
+            background:#06B6D4;
+            color:white;
+            border:none;
+            padding:10px 15px;
+            border-radius:8px;
+            cursor:pointer;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:white;
+            box-shadow:0 5px 15px rgba(0,0,0,.08);
+            border-radius:10px;
+            overflow:hidden;
+        }
+
+        th{
+            background:#0F172A;
+            color:white;
+            padding:12px;
+            text-align:left;
+        }
+
+        td{
+            padding:12px;
+            border-bottom:1px solid #eee;
+            font-size:14px;
+        }
+
+        .UPLOAD_EVIDENCE{ color:#16A34A; font-weight:bold; }
+        .STATUS_CHANGE{ color:#F59E0B; font-weight:bold; }
+        .SIGN_EVIDENCE{ color:#8B5CF6; font-weight:bold; }
+        .DOWNLOAD_EVIDENCE{ color:#06B6D4; font-weight:bold; }
+        .CASE_ASSIGNMENT{ color:#EF4444; font-weight:bold; }
+
+    </style>
+</h:head>
+
+<h:body>
+
+<div class="title">📊 Audit Log Dashboard</div>
+
+<!-- FILTER SECTION -->
+
+
+<!-- AUDIT TABLE -->
+<h:dataTable value="#{auditBean.logs}" var="log">
+
+    <h:column>
+        <f:facet name="header">User</f:facet>
+        #{log.userId.fullName}
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">Action</f:facet>
+        <span class="#{log.actionType}">
+            #{log.actionType}
+        </span>
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">Description</f:facet>
+        #{log.description}
+    </h:column>
+
+    <h:column>
+        <f:facet name="header">Date</f:facet>
+        #{log.timestamp}
+    </h:column>
+
+</h:dataTable>
+
+</h:body>
+</html>

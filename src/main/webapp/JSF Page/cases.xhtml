@@ -155,6 +155,12 @@ style="width:100%;">
 <f:facet name="header">Created By</f:facet>
 #{c.createdBy.fullName}
 </h:column>
+    
+<h:column>
+<f:facet name="header">Assigned To</f:facet>
+<h:outputText value="#{caseBean.assignedUserMap[c.caseId]}"
+              styleClass="#{caseBean.assignedUserMap[c.caseId] eq 'None' ? 'none' : ''}" />
+</h:column>
 
 <h:column>
 <f:facet name="header">Actions</f:facet>
@@ -169,7 +175,8 @@ styleClass="action-btn edit"/>
 value="Delete"
 action="#{caseBean.deleteCase(c)}"
 styleClass="action-btn delete"
-onclick="return confirm('Delete this case?');"/>
+onclick="return confirm('Delete this case?');"
+rendered="#{accessControlBean.hasPermission('DELETE_CASE')}"/>
 
 </h:form>
 

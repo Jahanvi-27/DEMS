@@ -4,6 +4,7 @@
  */
 package facades;
 
+import Entity.Cases;
 import Entity.Users;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.LocalBean;
@@ -72,6 +73,19 @@ public void delete(Users user){
 
     em.merge(user);
 
+}
+    
+      public List<Users> findAll(){
+
+        return em.createQuery(
+    "SELECT u FROM Users u",
+    Users.class)
+    .getResultList();
+    }
+      
+      public long countAll() {
+    return em.createQuery("SELECT COUNT(c) FROM Users c", Long.class)
+            .getSingleResult();
 }
     
  

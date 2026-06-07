@@ -64,9 +64,24 @@ border-bottom:1px solid #eee;
 <h:link
 outcome="addEvidence.xhtml"
 value="+ Upload Evidence"
-styleClass="add-btn"/>
+styleClass="add-btn"
+rendered="#{accessControlBean.hasPermission('UPLOAD_EVIDENCE')}"
+/>
 
 </div>
+    <div>
+<h:form>
+
+    <h:inputText value="#{evidenceBean.searchCode}" 
+                 style="padding:10px;width:250px;"
+                 />
+
+    <h:commandButton value="Search"
+                     action="#{evidenceBean.searchEvidence}"
+                     style="padding:10px;background:#06B6D4;color:white;"/>
+
+</h:form>
+        </div>
 
 <h:dataTable
 value="#{evidenceBean.evidenceList}"
@@ -100,8 +115,33 @@ style="width:100%">
 
 <h:column>
 <f:facet name="header">Status</f:facet>
-#{e.status}
+<h:outputText value="#{e.status}"
+    style="
+    #{e.status eq 'Pending' ? 'color:orange' :
+      e.status eq 'Verified' ? 'color:green' :
+      e.status eq 'Analyzed' ? 'color:blue' :
+      'color:red;font-weight:bold'}"/>
 </h:column>
+    
+<h:column>
+    <f:facet name="header">Evidence Code</f:facet>
+
+    <h:outputText value="#{e.evidenceCode}" rendered="#{evidenceBean.admin}" />
+
+    <h:outputText value="EV-XXXX" rendered="#{!evidenceBean.admin}" />
+</h:column>
+
+<h:column>
+<f:facet name="header">Digital SIgnature</f:facet>
+<h:form>
+                <h:commandButton value="Sign Evidence"
+ action="#{evidenceBean.signEvidence(e)}"
+immediate="true"/>
+            </h:form>
+
+</h:column>
+
+ 
 
 </h:dataTable>
 

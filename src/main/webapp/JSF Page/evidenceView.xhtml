@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Evidence Viewer</title>
+
+    <style>
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            
+            padding: 40px;
+        }
+
+        .card {
+            max-width: 950px;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: #0F172A;
+            margin: 0;
+        }
+
+        .badge {
+            background: #22C55E;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .box {
+            background: #F8FAFC;
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 4px solid #06B6D4;
+        }
+
+        .label {
+            font-size: 12px;
+            color: #64748B;
+            margin-bottom: 5px;
+        }
+
+        .value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0F172A;
+        }
+
+        .small {
+            font-size: 11px;
+            word-break: break-all;
+        }
+
+        .code {
+            font-family: monospace;
+            background: #0F172A;
+            color: #22C55E;
+            padding: 5px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .notice {
+            margin-top: 20px;
+            padding: 12px;
+            background: #FEF9C3;
+            border-left: 5px solid #FACC15;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 14px 22px;
+            background: linear-gradient(135deg, #06B6D4, #0EA5E9);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+        }
+
+    </style>
+</h:head>
+
+<h:body>
+
+<div class="card">
+
+    <div class="header">
+        <h2>🔍 Evidence Viewer</h2>
+
+        <span class="badge">
+            #{evidenceBean.searchedEvidence.status}
+        </span>
+    </div>
+
+    <div class="grid">
+
+        <div class="box">
+            <div class="label">Evidence Name</div>
+            <div class="value">
+                #{evidenceBean.searchedEvidence.evidenceName}
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="label">Evidence Code (Password)</div>
+            <div class="value code">
+                #{evidenceBean.searchedEvidence.evidenceCode}
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="label">Case Number</div>
+            <div class="value">
+                #{evidenceBean.searchedEvidence.caseId.caseNumber}
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="label">Category</div>
+            <div class="value">
+                #{evidenceBean.searchedEvidence.categoryId.categoryName}
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="label">SHA256</div>
+            <div class="value small">
+                #{evidenceBean.searchedEvidence.sha256Hash}
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="label">File Size</div>
+            <div class="value">
+                #{evidenceBean.searchedEvidence.fileSize}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="notice">
+        🔐 This evidence is encrypted. Password = Evidence Code
+    </div>
+
+    <h:outputLink value="#{request.contextPath}/file"
+                  styleClass="download-btn">
+
+        <f:param name="id"
+                 value="#{evidenceBean.searchedEvidence.evidenceId}" />
+
+        ⬇ Download Secure Evidence
+    </h:outputLink>
+
+</div>
+
+</h:body>
+</html>

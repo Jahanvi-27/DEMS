@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <title>DEMS</title>
+</h:head>
+
+<h:body>
+
+<div style="display:flex;">
+
+    <!-- KEEP YOUR EXISTING SIDEBAR EXACTLY AS IT IS -->
+    <div style="width:250px;">
+        <ui:insert name="sidebar"/>
+    </div>
+
+    <!-- ONLY CONTENT AREA -->
+    <div style="flex:1;">
+        <ui:insert name="content"/>
+    </div>
+
+</div>
+
+</h:body>
+</html>

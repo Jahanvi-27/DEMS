@@ -1,307 +1,265 @@
 <!DOCTYPE html>
-<html xmlns:h="jakarta.faces.html">
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
-
-    <title>DEMS Dashboard</title>
+    <title>DEMS - Cyber Forensic Dashboard</title>
 
     <style>
 
-        *{
+        body {
             margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Segoe UI',sans-serif;
-        }
-
-        body{
-            background:#F8FAFC;
+            font-family: 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #0B1220, #020617);
+            color: #E2E8F0;
         }
 
         /* SIDEBAR */
-
-        .sidebar{
-
-            width:260px;
-            height:100vh;
-
-            position:fixed;
-
-            top:0;
-            left:0;
-
-            background:#0F172A;
-
-            padding-top:20px;
+        .sidebar {
+            width: 230px;
+            height: 100vh;
+            position: fixed;
+            background: #0F172A;
+            padding: 20px;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.5);
         }
 
-        .logo{
-
-            text-align:center;
-
-            color:white;
-
-            font-size:28px;
-
-            font-weight:bold;
-
-            margin-bottom:40px;
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #06B6D4;
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        .sidebar a{
-
-            display:block;
-
-            color:white;
-
-            text-decoration:none;
-
-            padding:15px 25px;
-
-            transition:.3s;
+        .sidebar a {
+            display: block;
+            color: #CBD5E1;
+            padding: 12px;
+            margin: 8px 0;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
         }
 
-        .sidebar a:hover{
-
-            background:#06B6D4;
+        .sidebar a:hover {
+            background: #06B6D4;
+            color: black;
+            box-shadow: 0 0 15px #06B6D4;
         }
 
         /* CONTENT */
-
-        .content{
-
-            margin-left:260px;
-
-            padding:30px;
+        .content {
+            margin-left: 260px;
+            padding: 25px;
         }
 
-        /* TOPBAR */
-
-        .topbar{
-
-            background:white;
-
-            padding:20px;
-
-            border-radius:15px;
-
-            display:flex;
-
-            justify-content:space-between;
-
-            align-items:center;
-
-            box-shadow:
-            0 4px 10px rgba(0,0,0,.08);
+        /* TOP BAR */
+        .topbar {
+            background: rgba(15,23,42,0.8);
+            backdrop-filter: blur(10px);
+            padding: 18px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #1E293B;
         }
 
-        .welcome{
-
-            color:#0F172A;
+        .welcome h2 {
+            color: #06B6D4;
+            margin: 0;
         }
 
-        .logout-btn{
-
-            background:#DC2626;
-
-            color:white;
-
-            border:none;
-
-            padding:10px 20px;
-
-            border-radius:8px;
-
-            cursor:pointer;
+        .welcome p {
+            margin: 0;
+            font-size: 12px;
+            color: #94A3B8;
         }
 
-        /* CARDS */
-
-        .card-container{
-
-            margin-top:30px;
-
-            display:grid;
-
-            grid-template-columns:
-            repeat(auto-fit,minmax(250px,1fr));
-
-            gap:20px;
+        .logout-btn {
+            background: #DC2626;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .card{
-
-            background:white;
-
-            border-radius:15px;
-
-            padding:25px;
-
-            box-shadow:
-            0 5px 15px rgba(0,0,0,.08);
-
-            transition:.3s;
+        .logout-btn:hover {
+            box-shadow: 0 0 12px #DC2626;
         }
 
-        .card:hover{
-
-            transform:translateY(-5px);
+        /* GRID */
+        .grid {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
         }
 
-        .card h3{
-
-            color:#64748B;
-
-            margin-bottom:10px;
+        /* CARD */
+        .card {
+            background: rgba(15,23,42,0.8);
+            border: 1px solid #1E293B;
+            padding: 20px;
+            border-radius: 14px;
+            transition: 0.3s;
         }
 
-        .card h1{
-
-            color:#0F172A;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(6,182,212,0.3);
         }
 
-        /* STATUS COLORS */
-
-        .users{
-            border-left:5px solid #06B6D4;
+        .card h3 {
+            font-size: 13px;
+            color: #94A3B8;
         }
 
-        .cases{
-            border-left:5px solid #22C55E;
+        .card h1 {
+            font-size: 28px;
+            color: #E2E8F0;
         }
 
-        .evidence{
-            border-left:5px solid #F59E0B;
+        .highlight {
+            color: #06B6D4;
         }
 
-        .open{
-            border-left:5px solid #06B6D4;
+        /* LIVE PANEL */
+        .live-panel {
+            margin-top: 25px;
+            background: rgba(15,23,42,0.8);
+            border: 1px solid #1E293B;
+            padding: 20px;
+            border-radius: 14px;
         }
 
-        .closed{
-            border-left:5px solid #DC2626;
+        .live-title {
+            color: #06B6D4;
+            margin-bottom: 10px;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #1E293B;
+            font-size: 13px;
+        }
+
+        th {
+            color: #06B6D4;
+            text-align: left;
+        }
+
+        td {
+            color: #CBD5E1;
         }
 
     </style>
-
 </h:head>
 
 <h:body>
 
-    <!-- SIDEBAR -->
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <div class="logo">DEMS</div>
 
-    <div class="sidebar">
+    <a href="dashboard.xhtml">📊 Dashboard</a>
+    <a href="users.xhtml">👤 Users</a>
+    <a href="cases.xhtml">📁 Cases</a>
+    <a href="evidence.xhtml">🗂 Evidence</a>
+    <a href="assignCase.xhtml">⚡ Assign</a>
+    <a href="reports.xhtml">📄 Reports</a>
+    <a href="audit.xhtml">🔐 Audit Logs</a>
+</div>
 
-        <div class="logo">
-            DEMS
+<!-- CONTENT -->
+<div class="content">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="welcome">
+            <h2>Welcome, #{loginBean.loggedUser.fullName}</h2>
+            <p>Cyber Forensic Control System</p>
         </div>
 
-        <a href="dashboard.xhtml">📊 Dashboard</a>
+        <h:form>
+            <h:commandButton value="Logout"
+                             action="#{loginBean.logout()}"
+                             styleClass="logout-btn"/>
+        </h:form>
+    </div>
 
-        <a href="users.xhtml">👤 Users</a>
+    <!-- CARDS -->
+    <div class="grid">
 
-        <a href="cases.xhtml">📁 Cases</a>
+        <div class="card">
+            <h3>Total Users</h3>
+            <h1 class="highlight">#{dashboardBean.totalUsers}</h1>
+        </div>
 
-        <a href="evidence.xhtml">🗂 Evidence</a>
+        <div class="card">
+            <h3>Total Cases</h3>
+            <h1 class="highlight">#{dashboardBean.totalCases}</h1>
+        </div>
 
-        <a href="tasks.xhtml">✅ Tasks</a>
+        <div class="card">
+            <h3>Total Evidence</h3>
+            <h1 class="highlight">#{dashboardBean.totalEvidence}</h1>
+        </div>
 
-        <a href="reports.xhtml">📄 Reports</a>
+        <div class="card">
+            <h3>Open Cases</h3>
+            <h1 class="highlight">#{dashboardBean.openCases}</h1>
+        </div>
 
-        <a href="audit.xhtml">🔍 Audit Logs</a>
+        <div class="card">
+            <h3>Verified Evidence</h3>
+            <h1 class="highlight">#{dashboardBean.verifiedEvidence}</h1>
+        </div>
+
+        <div class="card">
+            <h3>Pending Evidence</h3>
+            <h1 class="highlight">#{dashboardBean.pendingEvidence}</h1>
+        </div>
 
     </div>
 
-    <!-- MAIN CONTENT -->
+    <!-- LIVE ACTIVITY PANEL -->
+    <div class="live-panel">
 
-    <div class="content">
+        <div class="live-title">⚡ Recent System Activity</div>
 
-        <!-- TOPBAR -->
+        <table>
+            <tr>
+                <th>User</th>
+                <th>Action</th>
+                <th>Module</th>
+                <th>Time</th>
+            </tr>
 
-        <div class="topbar">
+            <ui:repeat value="#{dashboardBean.recentActivities}" var="a">
+                <tr>
+                    <td>#{a.userId.fullName}</td>
+                    <td>#{a.activityType}</td>
+                    <td>#{a.moduleName}</td>
+                    <td>#{a.activityTime}</td>
+                </tr>
+            </ui:repeat>
 
-            <div class="welcome">
-
-                <h2>
-                    Welcome,
-                    #{loginBean.loggedUser.fullName}
-                </h2>
-
-                <p>
-                    Digital Evidence Management System
-                </p>
-
-            </div>
-
-            <h:form>
-
-                <h:commandButton
-                    value="Logout"
-                    action="#{loginBean.logout()}"
-                    styleClass="logout-btn"/>
-
-            </h:form>
-
-        </div>
-
-        <!-- CARDS -->
-
-        <div class="card-container">
-
-            <div class="card users">
-
-                <h3>Total Users</h3>
-
-                <h1>
-                    #{dashboardBean.totalUsers}
-                </h1>
-
-            </div>
-
-            <div class="card cases">
-
-                <h3>Total Cases</h3>
-
-                <h1>
-                    #{dashboardBean.totalCases}
-                </h1>
-
-            </div>
-
-            <div class="card evidence">
-
-                <h3>Total Evidence</h3>
-
-                <h1>
-                    #{dashboardBean.totalEvidence}
-                </h1>
-
-            </div>
-
-            <div class="card open">
-
-                <h3>Open Cases</h3>
-
-                <h1>
-                    #{dashboardBean.openCases}
-                </h1>
-
-            </div>
-
-            <div class="card closed">
-
-                <h3>Closed Cases</h3>
-
-                <h1>
-                    #{dashboardBean.closedCases}
-                </h1>
-
-            </div>
-
-        </div>
+        </table>
 
     </div>
+
+</div>
 
 </h:body>
-
 </html>

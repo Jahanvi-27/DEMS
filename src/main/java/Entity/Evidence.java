@@ -46,7 +46,8 @@ import java.util.Date;
     @NamedQuery(name = "Evidence.findBySha256Hash", query = "SELECT e FROM Evidence e WHERE e.sha256Hash = :sha256Hash"),
     @NamedQuery(name = "Evidence.findByUploadDate", query = "SELECT e FROM Evidence e WHERE e.uploadDate = :uploadDate"),
     @NamedQuery(name = "Evidence.findByStatus", query = "SELECT e FROM Evidence e WHERE e.status = :status"),
-    @NamedQuery(name = "Evidence.findByUpdatedAt", query = "SELECT e FROM Evidence e WHERE e.updatedAt = :updatedAt")})
+    @NamedQuery(name = "Evidence.findByUpdatedAt", query = "SELECT e FROM Evidence e WHERE e.updatedAt = :updatedAt"),
+    @NamedQuery(name = "Evidence.findByEvidenceCode", query = "SELECT e FROM Evidence e WHERE e.evidenceCode = :evidenceCode")})
 public class Evidence implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -88,6 +89,9 @@ public class Evidence implements Serializable {
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+    @Size(max = 50)
+    @Column(name = "evidence_code")
+    private String evidenceCode;
     @JoinColumn(name = "case_id", referencedColumnName = "case_id")
     @ManyToOne(optional = false)
     private Cases caseId;
@@ -202,6 +206,14 @@ public class Evidence implements Serializable {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getEvidenceCode() {
+        return evidenceCode;
+    }
+
+    public void setEvidenceCode(String evidenceCode) {
+        this.evidenceCode = evidenceCode;
     }
 
     public Cases getCaseId() {

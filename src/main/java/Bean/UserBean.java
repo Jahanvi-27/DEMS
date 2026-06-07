@@ -4,13 +4,17 @@
  */
 package Bean;
 
+import Entity.ActivityLogs;
 import Entity.Roles;
 import Entity.Users;
+import facades.ActivityLogFacade;
 import facades.RoleFacade;
 import facades.UserFacade;
 import jakarta.ejb.EJB;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.FacesContext;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.List;
 
@@ -27,6 +31,8 @@ public class UserBean implements Serializable {
 
     @EJB
     private RoleFacade roleFacade;
+    
+    @EJB private ActivityLogFacade activityLogFacade;
 
     private Users user = new Users();
     
@@ -74,6 +80,20 @@ public void setSelectedRoleId(Integer selectedRoleId) {
     }
 
     userFacade.save(user);
+    
+    ActivityLogs l = new ActivityLogs();
+        l.setUserId(user);
+        l.setActivityType("CREATE_USER");
+        l.setActivityDescription("User " + user.getFullName());
+            l.setModuleName("USER");
+        l.setActivityTime(new java.util.Date());
+        HttpServletRequest request =
+            (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequest();
+        l.setIpAddress(request.getRemoteAddr());
+
+        activityLogFacade.create(l);
 
     user = new Users();
 
@@ -91,6 +111,20 @@ public void setSelectedRoleId(Integer selectedRoleId) {
 public String updateUser(){
 
     userFacade.update(user);
+    
+    ActivityLogs l = new ActivityLogs();
+        l.setUserId(user);
+        l.setActivityType("UPDATE_USER");
+        l.setActivityDescription("User : " + user.getFullName());
+            l.setModuleName("USER");
+        l.setActivityTime(new java.util.Date());
+        HttpServletRequest request =
+            (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequest();
+        l.setIpAddress(request.getRemoteAddr());
+
+        activityLogFacade.create(l);
 
     return "users.xhtml?faces-redirect=true";
 
@@ -99,6 +133,20 @@ public String updateUser(){
 public void deleteUser(Users user){
 
     userFacade.delete(user);
+    
+    ActivityLogs l = new ActivityLogs();
+        l.setUserId(user);
+        l.setActivityType("DELETE_USER");
+        l.setActivityDescription("User : " + user.getFullName());
+            l.setModuleName("USER");
+        l.setActivityTime(new java.util.Date());
+        HttpServletRequest request =
+            (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequest();
+        l.setIpAddress(request.getRemoteAddr());
+
+        activityLogFacade.create(l);
 
 }
 

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>System Reports</title>
+
+    <style>
+        body {
+            font-family: Segoe UI;
+            background: #F1F5F9;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #0F172A;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    </style>
+</h:head>
+
+<h:body>
+
+<h:form>
+
+    <h:commandButton value="Load Reports"
+                     action="#{reportBean.loadAllReports}"
+                     style="margin-bottom:20px;padding:10px"/>
+
+    <!-- ACTIVITY LOG -->
+    <div class="card">
+        <div class="title">Activity Logs</div>
+
+        <h:dataTable value="#{reportBean.activityLogs}" var="a">
+            <h:column><f:facet name="header">User</f:facet>#{a.userId.fullName}</h:column>
+            <h:column><f:facet name="header">Type</f:facet>#{a.activityType}</h:column>
+            <h:column><f:facet name="header">Description</f:facet>#{a.activityDescription}</h:column>
+            <h:column><f:facet name="header">Time</f:facet>#{a.activityTime}</h:column>
+            <h:column><f:facet name="header">IP</f:facet>#{a.ipAddress}</h:column>
+        </h:dataTable>
+    </div>
+
+    <!-- LOGIN HISTORY -->
+    <div class="card">
+        <div class="title">Login History</div>
+
+        <h:dataTable value="#{reportBean.loginHistory}" var="l">
+            <h:column>#{l.userId.fullName}</h:column>
+            <h:column>#{l.ipAddress}</h:column>
+            <h:column>#{l.deviceInfo}</h:column>
+            <h:column>#{l.loginTime}</h:column>
+            <h:column>#{l.logoutTime}</h:column>
+        </h:dataTable>
+    </div>
+
+    <!-- EVIDENCE -->
+    <div class="card">
+        <div class="title">Evidence Report</div>
+
+        <h:dataTable value="#{reportBean.evidenceList}" var="e">
+            <h:column>#{e.evidenceName}</h:column>
+            <h:column>#{e.evidenceCode}</h:column>
+            <h:column>#{e.status}</h:column>
+            <h:column>#{e.fileType}</h:column>
+        </h:dataTable>
+    </div>
+
+</h:form>
+
+</h:body>
+</html>

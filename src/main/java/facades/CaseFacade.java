@@ -59,4 +59,17 @@ public class CaseFacade {
     public Cases find(Integer selectedCaseId) {
         return em.find(Cases.class,selectedCaseId);
     }
+    
+    public long countAll() {
+    return em.createQuery("SELECT COUNT(c) FROM Cases c", Long.class)
+            .getSingleResult();
+}
+
+public long countByStatus(String status) {
+    return em.createQuery("SELECT COUNT(c) FROM Cases c WHERE c.status = :status", Long.class)
+            .setParameter("status", status)
+            .getSingleResult();
+}
+    
+    
 }
